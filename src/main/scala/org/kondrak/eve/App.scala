@@ -15,8 +15,8 @@ class Test {
   var name: String = _
 }
 
-object DB {
-  val test = new SelectListBy[String, Test] {
+class DATABASE (var database: String, var address: String, var port: String, var username: String, var password: String) {
+  val test = new SelectList[Test] {
     def xsql =
       <xsql>
         SELECT *
@@ -29,7 +29,7 @@ object DB {
     Environment (
       "default",
       new JdbcTransactionFactory(),
-      new PooledDataSource("org.postgresql.Driver", "jdbc:postgresql://127.0.0.1:5432/test", "pgadmin", "password")
+      new PooledDataSource("org.postgresql.Driver", "jdbc:postgresql://" + address + ":" + port + "/" + database, username, password)
     )
   )
 
@@ -38,12 +38,33 @@ object DB {
   lazy val context = config.createPersistenceContext
 }
 
-object App extends App {
-  println( "Hello World!" )
+object DATABASE {
+  val DEFAULT_USERNAME = "pgadmin"
+  val DEFAULT_PASSWORD = "password"
+  val DEFAULT_DATABASE = "test"
+  val DEFAULT_ADDRESS = "127.0.0.1"
+  val DEFAULT_PORT = "5432"
+}
 
-  DB.context.readOnly { implicit session =>
-      DB.test("").foreach { p =>
-          println(p.id + ", " + p.name)
+object App {
+
+  def main(args: Array[String]) {
+    println("Hello World!")
+
+    val myVal = readLine("Please enter a delimiter: ")
+
+    val DB = new DATABASE(
+      DATABASE.DEFAULT_DATABASE,
+      DATABASE.DEFAULT_ADDRESS,
+      DATABASE.DEFAULT_PORT,
+      DATABASE.DEFAULT_USERNAME,
+      DATABASE.DEFAULT_PASSWORD
+    )
+
+    DB.context.readOnly { implicit session =>
+      DB.test().foreach { p =>
+        println(p.id + myVal + p.name)
       }
+    }
   }
 }

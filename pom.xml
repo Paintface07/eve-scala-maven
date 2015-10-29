@@ -45,16 +45,25 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>9.4-1204-jdbc41</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.mybatis.scala</groupId>
       <artifactId>mybatis-scala-core_2.11</artifactId>
       <version>1.0.3</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
       <version>3.3.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.lambdaworks</groupId>
+      <artifactId>jacks_2.10</artifactId>
+      <version>2.3.3</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

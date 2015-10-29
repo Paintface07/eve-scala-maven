@@ -1,8 +1,10 @@
 package org.kondrak.eve
 
+import org.kondrak.eve.api.Api
 import org.kondrak.eve.data.DATABASE
 import scala.io.Source._
 import scala.util.parsing.json._
+import com.lambdaworks.jacks._
 
 /**
  * Hello world!
@@ -33,15 +35,24 @@ object App {
 
     val result = fromURL(EVE_API).mkString
     println(result)
-    JSON.parseFull(result).foreach { p =>
-      def values = p match {
-        case p2: Map[String, Map[String, Any]] => p2
-        case _ => throw new ClassCastException
-      }
-      println(values.mkString)
-      values.foreach { e =>
-        println(e)
-      }
-    }
+
+    JacksMapper.mapper.enableDefaultTyping()
+
+    val api: Api = JacksMapper.readValue[Api](result)
+    println(api.crestEndpoint.href)
+//    JSON.parseFull(result).foreach { p =>
+//      def values = p match {
+//        case p2: Map[String, Map[String, Any]] => p2
+//        case _ => throw new ClassCastException
+//      }
+//      println(values.mkString)
+//      values.foreach { e =>
+//        println(e._1 + "|" + e._2)
+//        def layer2 = values match {
+//          case p2: Map[String, Map[String, Any]] => p2
+//          case _ => throw new ClassCastException
+//        }
+//      }
+//    }
   }
 }

@@ -9,13 +9,13 @@ import org.mybatis.scala.mapping.SelectList
  * Created by nosferatu-fedora on 10/27/15.
  */
 class DATABASE (var database: String, var address: String, var port: String, var username: String, var password: String) {
-  val test = new SelectList[Test] {
-    def xsql =
-      <xsql>
-        SELECT id, name
-        FROM "TEST";
-      </xsql>
-  }
+//  val test = new SelectList[Test] {
+//    def xsql =
+//      <xsql>
+//        SELECT id, name
+//        FROM "TEST";
+//      </xsql>
+//  }
 
   // datasource configuration
   val config = Configuration (
@@ -26,15 +26,15 @@ class DATABASE (var database: String, var address: String, var port: String, var
     )
   )
 
-  config += test
+//  config += test
 
   lazy val context = config.createPersistenceContext
 }
 
 object DATABASE {
-  val DEFAULT_USERNAME = "pgadmin"
+  val DEFAULT_USERNAME = "eveapp"
   val DEFAULT_PASSWORD = "password"
-  val DEFAULT_DATABASE = "test"
+  val DEFAULT_DATABASE = "EVEAPP"
   val DEFAULT_ADDRESS = "127.0.0.1"
   val DEFAULT_PORT = "5432"
 }

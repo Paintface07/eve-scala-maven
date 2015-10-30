@@ -1,9 +1,9 @@
 package org.kondrak.eve
 
 import org.kondrak.eve.api.Api
+import org.kondrak.eve.api.XmlApi
 import org.kondrak.eve.data.DATABASE
 import scala.io.Source._
-import scala.util.parsing.json._
 import com.lambdaworks.jacks._
 
 /**
@@ -18,6 +18,7 @@ object App {
 
 //    val myVal = readLine("Please enter a delimiter: ")
     val EVE_API = "https://public-crest.eveonline.com/"
+    val EVE_XML_API = new XmlApi
 
     val DB = new DATABASE(
       DATABASE.DEFAULT_DATABASE,
@@ -40,19 +41,10 @@ object App {
 
     val api: Api = JacksMapper.readValue[Api](result)
     println(api.crestEndpoint.href)
-//    JSON.parseFull(result).foreach { p =>
-//      def values = p match {
-//        case p2: Map[String, Map[String, Any]] => p2
-//        case _ => throw new ClassCastException
-//      }
-//      println(values.mkString)
-//      values.foreach { e =>
-//        println(e._1 + "|" + e._2)
-//        def layer2 = values match {
-//          case p2: Map[String, Map[String, Any]] => p2
-//          case _ => throw new ClassCastException
-//        }
-//      }
-//    }
+
+    val xmlResult = fromURL(EVE_XML_API.root).mkString
+    println(xmlResult)
+
+
   }
 }
